@@ -39,8 +39,11 @@ def response_method_not_allowed():
 def response_not_found():
     """Returns a 404 Not Found response"""
 
-    # TODO: Implement response_not_found
-    return b""
+    return b"\r\n".join([
+        b"HTTP/1.1 404 Not Found",
+        b"Content-Type: text/plain",
+        b"",
+        b"Content not found!"
 
 
 def parse_request(request):
