@@ -44,6 +44,7 @@ def response_not_found():
         b"Content-Type: text/plain",
         b"",
         b"Content not found!"
+    ])
 
 
 def parse_request(request):
@@ -88,9 +89,11 @@ def response_path(path):
         response_path('/a_page_that_doesnt_exist.html') -> Raises a NameError
 
     """
+    
+    webroot_path = os.path.join(os.getcwd(), 'webroot' + path)
 
-    # TODO: Raise a NameError if the requested content is not present
-    # under webroot.
+    if not os.path.exists(webroot_path):
+        raise NameError
 
     # TODO: Fill in the appropriate content and mime_type give the path.
     # See the assignment guidelines for help on "mapping mime-types", though
@@ -149,6 +152,9 @@ def server(log_buffer=sys.stderr):
                     )
                 except NotImplementedError:
                     response = response_method_not_allowed()
+                    
+                except NameError:
+                    response = response = response_not_found()
 
                 conn.sendall(response)
             except:
