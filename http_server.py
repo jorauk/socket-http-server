@@ -95,17 +95,15 @@ def response_path(path):
     if not os.path.exists(webroot_path):
         raise NameError
 
-    # TODO: Fill in the appropriate content and mime_type give the path.
-    # See the assignment guidelines for help on "mapping mime-types", though
-    # you might need to create a special case for handling make_time.py
-    #
-    # If the path is "make_time.py", then you may OPTIONALLY return the
-    # result of executing `make_time.py`. But you need only return the
-    # CONTENTS of `make_time.py`.
-    
-    content = b"not implemented"
-    mime_type = b"not implemented"
-
+    else:
+        if os.path.isfile(webroot_path):
+            with open(webroot_path, "rb") as f:
+                content = f.read()
+            mime_type = mimetypes.guess_type(path)[0].encode()
+        else:
+            content = "\r\n".join(os.listdir(webroot_path)).encode()
+            mime_type = "text/plain".encode()
+           
     return content, mime_type
 
 
