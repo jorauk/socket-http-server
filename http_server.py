@@ -1,6 +1,8 @@
 import socket
 import sys
 import traceback
+import mimetypes
+import os
 
 def response_ok(body=b"This is a minimal response", mimetype=b"text/plain"):
     """
@@ -104,7 +106,7 @@ def response_path(path):
             content = "\r\n".join(os.listdir(webroot_path)).encode()
             mime_type = "text/plain".encode()
            
-    return content, mime_type
+        return content, mime_type
 
 
 def server(log_buffer=sys.stderr):
